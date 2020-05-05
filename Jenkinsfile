@@ -16,11 +16,10 @@ pipeline {
   //       sh 'mvn test'
   //     }
   //   }
-    stage('Deliver') {
-      agent none
-      steps {
-        sh 'docker build . -t calculator:1.0'
-      }
+  agent none
+  stage('Deliver') {
+    steps {
+      sh 'docker build . -t calculator:1.0'
     }
   }
 }
