@@ -1,15 +1,23 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven'
+    }
+  }
   stages {
     stage('Build') {
       steps {
-        sh 'mvn clean install'
+        sh 'mvn -B -DskipTests clean package'
       }
     }
-
     stage('Test') {
       steps {
         sh 'mvn test'
+      }
+      post {
+        always {
+          junit 'target/surefire-reports/*.xml'
+        }
       }
     }
   }
