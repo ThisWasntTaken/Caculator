@@ -1,4 +1,9 @@
 pipeline {
+  environment {
+    registry = "ananthshreekumar/calculator"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   agent none
   stages {
     stage('Maven') {
@@ -28,8 +33,23 @@ pipeline {
     }
     stage('Deliver') {
       agent any
-      steps {
-        sh 'docker build . -t calculator:1.0'
+      stages {
+        stage('Build Image') {
+          steps{
+            script {
+              docker.build registry + ":$BUILD_NUMBER"
+            }
+          }
+        }
+        stage('Deploy Image') {
+          steps{
+            script {
+              docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+              }
+            }
+          }
+        }
       }
     }
   }
