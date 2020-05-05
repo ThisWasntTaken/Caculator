@@ -53,6 +53,7 @@ pipeline {
     //   }
     // }
     stage('Deploy') {
+      agent any
       steps {
         script {
           step([$class: "RundeckNotifier",
