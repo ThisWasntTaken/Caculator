@@ -31,27 +31,27 @@ pipeline {
     //     }
     //   }
     // }
-    // stage('Deliver') {
-    //   agent any
-    //   stages {
-    //     stage('Build Image') {
-    //       steps{
-    //         script {
-    //           dockerImage = docker.build registry + ":$BUILD_NUMBER"
-    //         }
-    //       }
-    //     }
-    //     stage('Publish Image') {
-    //       steps{
-    //         script {
-    //           docker.withRegistry( '', registryCredential ) {
-    //             dockerImage.push()
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Deliver') {
+      agent any
+      stages {
+        stage('Build Image') {
+          steps{
+            script {
+              dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+          }
+        }
+        stage('Publish Image') {
+          steps{
+            script {
+              docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+              }
+            }
+          }
+        }
+      }
+    }
     stage('Deploy') {
       agent any
       steps {
