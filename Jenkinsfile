@@ -17,7 +17,7 @@ pipeline {
       }
     }
     stage('Deliver') {
-      agent none
+      agent any
       steps {
         sh 'docker build . -t calculator:1.0'
       }
