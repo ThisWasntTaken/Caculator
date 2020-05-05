@@ -6,7 +6,7 @@ pipeline {
   }
   agent none
   stages {
-    stage('Maven') {
+    stage('Build and Test') {
       agent {
         docker {
           image 'maven:3.6.3-jdk-11'
