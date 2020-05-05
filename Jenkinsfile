@@ -15,5 +15,10 @@ pipeline {
         sh 'mvn test'
       }
     }
+    stage('Deliver') {
+      steps {
+        sh 'docker build . -t calculator:1.0'
+      }
+    }
   }
 }
