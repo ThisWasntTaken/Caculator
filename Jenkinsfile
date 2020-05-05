@@ -24,9 +24,9 @@ pipeline {
             sh 'mvn test'
           }
           post {
-              always {
-                  junit 'target/surefire-reports/*.xml' 
-              }
+            always {
+                junit 'target/surefire-reports/*.xml' 
+            }
           }
         }
       }
@@ -41,7 +41,7 @@ pipeline {
             }
           }
         }
-        stage('Deploy Image') {
+        stage('Publish Image') {
           steps{
             script {
               docker.withRegistry( '', registryCredential ) {
